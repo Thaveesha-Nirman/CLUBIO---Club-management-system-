@@ -1,5 +1,10 @@
 package com.university.clubmanager.controller;
 
+/**
+ * * Member 01 : feature/auth-fullstack-36682
+ * * Controller to handle user authentication, including login and registration.
+ */
+
 import com.university.clubmanager.dto.AuthResponse;
 import com.university.clubmanager.dto.LoginRequest;
 import com.university.clubmanager.entity.User;
@@ -16,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"}) // Added both ports for safety
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" }) 
 public class AuthController {
 
     @Autowired
@@ -31,13 +36,19 @@ public class AuthController {
     @Autowired
     private JwtService jwtService;
 
-    // --- REGISTER ---
+    //  REGISTER 
+    /**
+     * * Member 01 : Registers a new user with the system.
+     */
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         return ResponseEntity.ok(authService.registerUser(user));
     }
 
-    // --- LOGIN ---
+    // LOGIN 
+    /**
+     * * Member 01 : Authenticates a user and issues a JWT token.
+     */
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
 
@@ -45,9 +56,7 @@ public class AuthController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),
-                        loginRequest.getPassword()
-                )
-        );
+                        loginRequest.getPassword()));
 
         // 2. Get UserDetails & Generate Token
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -57,19 +66,15 @@ public class AuthController {
         User dbUser = userRepository.findByEmail(loginRequest.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // 4. Build Response (NOW WITH THE CRITICAL ID)
         AuthResponse response = new AuthResponse();
 
-        // --- THIS IS THE FIX ---
-        response.setId(dbUser.getId()); // <--- SENDING THE ID TO FRONTEND
-
+        response.setId(dbUser.getId()); 
         response.setUsername(dbUser.getFirstName());
         response.setEmail(dbUser.getEmail());
         response.setRole(dbUser.getRole());
         response.setToken(jwtToken);
         response.setMessage("Login Successful");
 
-        // --- POPULATE THE STUDENT DETAILS ---
         response.setStudentId(dbUser.getStudentId());
         response.setFaculty(dbUser.getFaculty());
         response.setDepartment(dbUser.getDepartment());
@@ -81,10 +86,13 @@ public class AuthController {
     // AuthController.java
 
     @GetMapping("/count")
+    /**
+     * * Member 01 : Returns the total number of registered users.
+     */
     public ResponseEntity<Long> getMemberCount() {
         // This uses the built-in .count() method from JpaRepository
         long count = userRepository.count();
         return ResponseEntity.ok(count);
     }
-    
+
 }
