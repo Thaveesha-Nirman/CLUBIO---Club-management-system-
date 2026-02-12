@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import api from '../api/axiosConfig';
 import { useNavigate } from 'react-router-dom';
-import { useUI } from '../context/UIContext'; 
+import { useUI } from '../context/UIContext';
 import {
   Mail, Lock, Loader2, Menu, ChevronDown, ChevronUp,
   GraduationCap, Building, BookOpen, Calendar, CheckCircle,
@@ -11,10 +11,14 @@ import {
 import pattern from '../assets/pattern.png';
 import logoNsbm from '../assets/logo_nsbm.png';
 
-const Register = () => { 
+/**
+ * * Member 01 : feature/auth-fullstack-36682
+ * * Registration Page UI for creating new user accounts with validation.
+ */
+const Register = () => {
 
-  const navigate = useNavigate(); 
-  const { showToast } = useUI(); 
+  const navigate = useNavigate();
+  const { showToast } = useUI();
 
   const [memberCount, setMemberCount] = useState(2000);
   const [userStatus, setUserStatus] = useState('Student');
@@ -91,6 +95,9 @@ const Register = () => {
     "Faculty of Postgraduate & Professional Advancement": ["General Studies"]
   };
 
+  /**
+   * * Member 01 : Validates input and submits registration data to the backend.
+   */
   const handleRegister = async (e) => {
     e.preventDefault();
 
