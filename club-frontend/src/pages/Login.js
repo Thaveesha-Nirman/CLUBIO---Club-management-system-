@@ -15,7 +15,7 @@ import facebookImg from '../assets/facebook.png';
 import githubImg from '../assets/github.png';
 
 /**
- * * Member 01 : feature/auth-fullstack-36682
+ * * Member 01 : feature and auth-fullstack-36682
  * * Login page UI handling user credentials and redirection upon success.
  */
 const Login = () => {
