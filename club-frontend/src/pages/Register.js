@@ -12,7 +12,7 @@ import pattern from '../assets/pattern.png';
 import logoNsbm from '../assets/logo_nsbm.png';
 
 /**
- * * Member 01 : feature/auth-fullstack-36682
+ * * Member 01 : feature and auth-fullstack-36682
  * * Registration Page UI for creating new user accounts with validation.
  */
 const Register = () => {
