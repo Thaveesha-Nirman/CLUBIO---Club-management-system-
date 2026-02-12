@@ -16,7 +16,7 @@ import githubImg from '../assets/github.png';
 
 /**
  * * Member 01 : feature/auth-fullstack-36682
- * * Login Page UI handling user credentials and redirection upon success.
+ * * Login page UI handling user credentials and redirection upon success.
  */
 const Login = () => {
   const navigate = useNavigate();
