@@ -2,9 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useAlert } from '../context/AlertContext';
 import { Trash2, Shield, Mail, Phone, User, Globe, Calendar, GraduationCap, Building2, AlertTriangle, X } from 'lucide-react';
 
+/**
+ * member -36738 
+ * Primary Resposibility : managing the club entity life cycle and Administrative views.
+ */
+
 const DEFAULT_CLUB_LOGO = "https://cdn-icons-png.flaticon.com/512/4264/4264818.png";
 const DEFAULT_AVATAR = "https://i.pravatar.cc/150?img=12";
 
+/**
+ * * member -36738  Ui component for confirming club deletion. Provides a clear warning and requires explicit confirmation before proceeding with the delete action.
+ */
 const DeleteModal = ({ isOpen, onClose, onConfirm, clubName }) => {
     if (!isOpen) return null;
 
@@ -79,6 +87,9 @@ const DeleteModal = ({ isOpen, onClose, onConfirm, clubName }) => {
 
 const AllClubs = ({ onViewClub }) => {
     const { showAlert } = useAlert();
+    /**
+     * * member -36738 State management for clubs data, loading state, and delete confirmation modal. Handles fetching clubs from the backend and updating the UI accordingly.
+     */
     const [clubs, setClubs] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -86,6 +97,9 @@ const AllClubs = ({ onViewClub }) => {
     const [clubToDelete, setClubToDelete] = useState(null);
 
     useEffect(() => {
+        /**
+         * * member -36738 Fetches the list of clubs from the backend API. It retrieves the authentication token from localStorage and includes it in the request headers. The response is filtered to show only active clubs, and the loading state is managed to provide feedback to the user.
+         */
         const fetchClubs = async () => {
             try {
                 const storedData = localStorage.getItem('clubUser');
@@ -108,13 +122,17 @@ const AllClubs = ({ onViewClub }) => {
         };
         fetchClubs();
     }, []);
-
+/**
+ * * member -36738 Handles the opening of the delete confirmation modal. It sets the selected club to be deleted and toggles the visibility of the modal. This function is triggered when the user clicks the "Delete" button for a specific club.
+ */
     const openDeleteModal = (club) => {
         if (!club) return;
         setClubToDelete(club);
         setIsDeleteModalOpen(true);
     };
-
+       /**
+        * * member -36738 Executes the club deletion process. It sends a DELETE request to the backend API with the selected club's ID and the authentication token. Upon successful deletion, it updates the clubs state to remove the deleted club and provides user feedback through alerts. If the deletion fails, it shows an error alert with details.
+        */
     const confirmDelete = async () => {
         if (!clubToDelete) return;
         try {
@@ -162,8 +180,13 @@ const AllClubs = ({ onViewClub }) => {
                     </div>
                 </div>
             </div>
-
-            {/* Clubs Grid */}
+        
+            {/* Clubs Grid */
+            
+            /**
+             * * member -36738 Displays the list of active clubs in a responsive grid layout. Each club card includes the club's logo, name, category, description, and administrator details. The card also provides "View" and "Delete" actions for each club, allowing users to interact with the club data directly from the UI.
+             */
+            }
             <div className="space-y-4">
                 {clubs.length === 0 ? (
                     <div className="text-center py-24 bg-white/5 rounded-3xl border border-white/10">
@@ -193,7 +216,15 @@ const AllClubs = ({ onViewClub }) => {
                                 </div>
                             </div>
 
-                            {/* Admin Details */}
+                            {/* Admin Details */
+                            
+                            /**
+                             * * member -36738 Displays the club administrator's details, including their profile image, name, role, faculty, batch, student ID, email, and contact number. This section provides a quick overview of the admin responsible for the club and is styled to stand out within the club card.
+                             */
+                            }
+
+
+
                             <div className="flex-1 bg-black/20 p-4 rounded-2xl border border-white/5 flex gap-4 min-w-[320px]">
                                 <img src={club.admin?.profileImage || DEFAULT_AVATAR} className="w-14 h-14 rounded-full border-2 border-white/10 object-cover" alt="Admin" />
                                 <div className="flex-1 space-y-2">
@@ -214,7 +245,13 @@ const AllClubs = ({ onViewClub }) => {
                                 </div>
                             </div>
 
-                            {/* Actions */}
+                            {/* Actions */
+                            
+                            /**
+                             * * member -36738 Provides action buttons for viewing and deleting the club. The "View" button triggers the onViewClub function passed as a prop, allowing users to see more details about the club. The "Delete" button opens the delete confirmation modal, enabling users to remove the club from the database with a confirmation step to prevent accidental deletions.
+                             */
+                            
+                            }
                             <div className="flex xl:flex-col gap-3 justify-center border-t xl:border-t-0 xl:border-l border-white/10 pt-4 xl:pt-0 xl:pl-6">
                                 <button onClick={() => onViewClub(club)} className="px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-bold text-white transition-all w-full xl:w-32 flex items-center justify-center gap-2">View</button>
                                 <button onClick={() => openDeleteModal(club)} className="px-6 py-2.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-xl text-sm font-bold text-red-400 transition-all w-full xl:w-32 flex items-center justify-center gap-2"><Trash2 size={16} /> Delete</button>
@@ -229,4 +266,8 @@ const AllClubs = ({ onViewClub }) => {
     );
 };
 
+
+/**
+ * * member -36738 Exports the AllClubs component as the default export of the module, allowing it to be imported and used in other parts of the application. This component serves as the main interface for displaying and managing all registered clubs within the system.
+ */
 export default AllClubs;
