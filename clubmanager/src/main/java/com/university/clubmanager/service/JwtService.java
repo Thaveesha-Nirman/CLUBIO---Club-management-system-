@@ -1,5 +1,10 @@
 package com.university.clubmanager.service;
 
+/**
+ * * Member 01 : feature/auth-fullstack-36682
+ * * Utility service for generating, parsing, and validating JWT tokens.
+ */
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,6 +25,9 @@ public class JwtService {
     // Ideally, move this to application.properties later
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
 
+    /**
+     * * Member 01 : Extracts the username from the given token.
+     */
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -29,6 +37,9 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    /**
+     * * Member 01 : Generates a JWT token for the authenticated user.
+     */
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
@@ -43,6 +54,9 @@ public class JwtService {
                 .compact();
     }
 
+    /**
+     * * Member 01 : Validates the token against the user details and expiration.
+     */
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
