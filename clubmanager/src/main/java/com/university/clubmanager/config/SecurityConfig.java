@@ -1,5 +1,10 @@
 package com.university.clubmanager.config;
 
+/**
+ * * Member 01 : feature/auth-fullstack-36682
+ * * Configuration class for Spring Security, defining URL access rules and filter chains.
+ */
+
 import com.university.clubmanager.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,27 +31,31 @@ public class SecurityConfig {
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtAuthenticationFilter jwtAuthenticationFilter) {
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService,
+            JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.customUserDetailsService = customUserDetailsService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
+    /**
+     * * Member 01 : Defines the security filter chain, including public/private
+     * endpoints and CORS.
+     */
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        // 1. Allow Pre-flight checks (ALWAYS FIRST)
+                        // 1. Allow Pre-flight checks 
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         // 2. Public Static Resources & Auth
                         .requestMatchers("/api/v1/auth/**", "/api/auth/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
 
-                        // 3. SPECIFIC SECURE RULES (MUST BE BEFORE GENERIC RULES)
-                        // Explicitly force authentication for DELETE on posts
-                                .requestMatchers(HttpMethod.DELETE, "/api/posts/**").authenticated()                        .requestMatchers(HttpMethod.PUT, "/api/posts/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/posts/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/posts/**").authenticated()
 
                         .requestMatchers(HttpMethod.DELETE, "/api/events/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/events/**").authenticated()
@@ -61,8 +70,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/uploads/**").authenticated()
 
                         // 6. Catch-all for anything else
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -71,6 +79,9 @@ public class SecurityConfig {
     }
 
     @Bean
+    /**
+     * * Member 01 : Configures CORS settings to allow frontend access.
+     */
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         // Allow both standard React ports to prevent CORS errors during development
