@@ -14,7 +14,11 @@ import googleImg from '../assets/google.png';
 import facebookImg from '../assets/facebook.png';
 import githubImg from '../assets/github.png';
 
-const Login = () => { 
+/**
+ * * Member 01 : feature/auth-fullstack-36682
+ * * Login Page UI handling user credentials and redirection upon success.
+ */
+const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const { showToast } = useUI();
@@ -63,6 +67,9 @@ const Login = () => {
     };
   }, []);
 
+  /**
+   * * Member 01 : Submits login credentials to the backend and handles response.
+   */
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
