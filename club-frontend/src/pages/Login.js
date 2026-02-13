@@ -101,7 +101,17 @@ const Login = () => {
   };
 
   return (
+    
     <div className="relative font-sans text-white selection:bg-emerald-500 selection:text-white">
+
+      {/* 
+  Custom styles for Login Page UI:
+  - Imports Montserrat font from Google Fonts
+  - Defines reusable font utility class
+  - Adds keyframe animations (slide-in, background pan, blob motion, slow bounce)
+  - Enables smooth scrolling behavior
+  These styles enhance visual effects and user experience on the login screen.
+*/}
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
