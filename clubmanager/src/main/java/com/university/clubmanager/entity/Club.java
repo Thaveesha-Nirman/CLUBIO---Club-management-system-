@@ -1,5 +1,10 @@
 package com.university.clubmanager.entity;
 
+/**
+ * * Member 02 : origin/feature/club-join-request-36738
+ * * Entity class representing a Club, establishing relationships with Members, Posts, and Events.
+ */
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -21,14 +26,14 @@ public class Club {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(length = 2000) // Allow longer text for "Purpose"
+    @Column(length = 2000) 
     private String description;
 
     private String category;
     private String logoUrl;
     private String coverUrl;
 
-    // --- CONTACT INFO ---
+    //  CONTACT INFO 
     @Column(name = "contact_number")
     private String contactNumber;
 
@@ -41,11 +46,10 @@ public class Club {
     private String status = "PENDING";
     private LocalDateTime createdAt;
 
-    // --- RELATIONSHIPS ---
 
     @ManyToOne
     @JoinColumn(name = "admin_id")
-    @JsonIgnoreProperties({"joinedClubs", "password", "role"})
+    @JsonIgnoreProperties({ "joinedClubs", "password", "role" })
     private User admin;
 
     @JsonIgnore
