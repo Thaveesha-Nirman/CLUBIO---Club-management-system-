@@ -60,4 +60,10 @@ public class SharedPost {
     public void setSharedAt(LocalDateTime sharedAt) {
         this.sharedAt = sharedAt;
     }
+    /**
+ * This class represents a post that was shared by a user.
+ * It stores which user shared the post, which post was shared,
+ * and the date and time when it was shared.
+ */
+
 }
