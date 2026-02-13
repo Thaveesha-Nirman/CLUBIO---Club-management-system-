@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+
+/**
+ * * Member 10 : Brand & Support
+ * * Informational page about the CLUBIO platform.
+ */
 import { useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft, Info, Target, Users, 
-  ChevronDown, ChevronUp, Sparkles, AlertCircle, X 
+import {
+  ArrowLeft, Info, Target, Users,
+  ChevronDown, ChevronUp, Sparkles, AlertCircle, X
 } from 'lucide-react';
 
 import pattern from '../assets/pattern.png';
@@ -31,7 +36,7 @@ const About = () => {
 
   return (
     <div className="relative font-sans text-white selection:bg-emerald-500 selection:text-white">
-      
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
         .font-montserrat { font-family: "Montserrat", sans-serif; font-weight: 700; }
@@ -55,7 +60,7 @@ const About = () => {
 
         html { scroll-behavior: smooth; }
       `}</style>
-      
+
 
       <div className="fixed inset-0 z-[-50]">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-900"></div>
@@ -70,7 +75,7 @@ const About = () => {
         <nav className={`relative z-10 flex justify-between items-center p-6 max-w-7xl mx-auto w-full transition-all duration-1000 transform ${mounted ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0'}`}>
           <div className="text-xl md:text-2xl font-bold tracking-wide flex items-center gap-4">
             <div className="p-2 bg-white/90 rounded-xl shadow-lg backdrop-blur-sm">
-               <img src={logoNsbm} alt="NSBM Logo" className="w-16 h-auto object-contain" />
+              <img src={logoNsbm} alt="NSBM Logo" className="w-16 h-auto object-contain" />
             </div>
             <span className="hidden sm:inline tracking-widest text-lg border-l border-white/30 pl-4 font-montserrat uppercase">CLUBIO</span>
           </div>
@@ -80,10 +85,10 @@ const About = () => {
         </nav>
 
         <main className={`relative z-10 max-w-4xl mx-auto px-6 py-12 flex-grow w-full transition-all duration-1000 transform ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          
+
           <div className="relative overflow-hidden rounded-[3rem] border border-white/20 shadow-2xl backdrop-blur-sm bg-white/5 p-10 md:p-16">
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white/10 to-transparent pointer-events-none"></div>
-            
+
             <div className="text-center mb-12">
               <div className="w-20 h-20 bg-white/20 rounded-[2rem] flex items-center justify-center text-white mx-auto mb-6 shadow-xl border border-white/20">
                 <Info size={40} />
@@ -134,8 +139,8 @@ const About = () => {
       <footer ref={footerRef} className="relative z-10 w-full py-12 px-6 border-t border-white/10 backdrop-blur-md bg-black/40">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-emerald-100/70 tracking-wide">
           <div className="flex flex-col items-center md:items-start mb-4 md:mb-0">
-              <p className="font-bold text-white mb-1">© 2026 NSBM Green University</p>
-              <p className="text-xs">Excellence in Education</p>
+            <p className="font-bold text-white mb-1">© 2026 NSBM Green University</p>
+            <p className="text-xs">Excellence in Education</p>
           </div>
           <div className="flex gap-8 font-medium">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
