@@ -1,5 +1,10 @@
 package com.university.clubmanager.service;
 
+/**
+ * * Member 09 : Settings & System
+ * * Initializes default data for Super Admin and sample clubs.
+ */
+
 import com.university.clubmanager.entity.Club;
 import com.university.clubmanager.entity.User;
 import com.university.clubmanager.repository.ClubRepository;
@@ -23,7 +28,6 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // 1. Create the SUPER ADMIN (The Boss)
         if (userRepository.findByEmail("boss@university.com").isEmpty()) {
             User boss = new User();
             boss.setFirstName("The");
@@ -36,7 +40,6 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println(">> Super Admin created: boss@university.com / admin123");
         }
 
-        // 2. Create a test Club Admin (Lecturer)
         if (userRepository.findByEmail("admin@club.com").isEmpty()) {
             User clubAdmin = new User();
             clubAdmin.setFirstName("Club");
@@ -47,7 +50,6 @@ public class DataInitializer implements CommandLineRunner {
             clubAdmin.setRole("ROLE_ADMIN");
             User savedAdmin = userRepository.save(clubAdmin);
 
-            // 3. Create a PENDING club for testing approval logic
             if (clubRepository.count() == 0) {
                 Club club = new Club();
                 club.setName("Space Exploration Society");
@@ -55,7 +57,6 @@ public class DataInitializer implements CommandLineRunner {
                 club.setCategory("Science");
                 club.setStatus("PENDING");
 
-                // ✅ FIXED LINE BELOW (setCreator -> setAdmin)
                 club.setAdmin(savedAdmin);
 
                 clubRepository.save(club);
