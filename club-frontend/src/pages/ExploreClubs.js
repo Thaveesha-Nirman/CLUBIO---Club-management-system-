@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 02 : origin/feature/club-join-request-36738
+ * * UI component for browsing and searching available clubs by category.
+ */
 import { Search, Users, ArrowRight, Tag, Building2, Grid3x3, Sparkles, Filter } from 'lucide-react';
 
 const API_BASE = 'http://localhost:8080';
@@ -16,6 +21,9 @@ const ExploreClubs = ({ onViewClub }) => {
   const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
+    /**
+     * * Member 02 : Fetches the list of all clubs from the backend.
+     */
     const fetchClubs = async () => {
       try {
         const token = JSON.parse(localStorage.getItem('clubUser'))?.token;
@@ -29,6 +37,9 @@ const ExploreClubs = ({ onViewClub }) => {
     fetchClubs();
   }, []);
 
+  /**
+   * * Member 02 : smooth scrolls to the selected category section.
+   */
   const scrollToCategory = (category) => {
     setActiveCategory(category);
     const element = document.getElementById(`section-${category}`);
@@ -141,8 +152,8 @@ const ExploreClubs = ({ onViewClub }) => {
               key={cat}
               onClick={() => scrollToCategory(cat)}
               className={`group relative whitespace-nowrap px-6 py-3 rounded-xl border text-xs font-bold uppercase tracking-wide transition-all duration-300 backdrop-blur-sm ${activeCategory === cat
-                  ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)]'
-                  : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10 hover:border-white/10 hover:text-white'
+                ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.1)]'
+                : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10 hover:border-white/10 hover:text-white'
                 }`}
             >
               <span className="relative z-10 flex items-center gap-2">
