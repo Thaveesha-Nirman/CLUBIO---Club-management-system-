@@ -1,4 +1,9 @@
 import React from 'react';
+
+/**
+ * * Member 06 : Mainly UI/UX
+ * * Main application component setting up routing and global providers.
+ */
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { UIProvider } from './context/UIContext';
@@ -10,7 +15,7 @@ import Dashboard from './pages/Dashboard';
 import ClubRequests from './pages/ClubRequests';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import Features from './pages/Features'; 
+import Features from './pages/Features';
 import Support from './pages/Support';
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
