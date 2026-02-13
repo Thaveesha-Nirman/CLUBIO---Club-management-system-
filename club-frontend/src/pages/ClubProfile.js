@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 02 : origin/feature/club-join-request-36738
+ * * Detailed profile view for a single club, showing posts, events, and admin details.
+ */
 import { useAlert } from '../context/AlertContext';
 import {
     ArrowLeft, Settings, Calendar, Image as ImageIcon,
@@ -95,8 +100,8 @@ const ClubProfile = ({ club, user, onBack, onEditClick, onPublishEventClick, onU
     const [isJoining, setIsJoining] = useState(false);
 
     const [isManagingMembers, setIsManagingMembers] = useState(false);
-    const [isCreatingPost, setIsCreatingPost] = useState(false); 
-    const [editingPost, setEditingPost] = useState(null);        
+    const [isCreatingPost, setIsCreatingPost] = useState(false);
+    const [editingPost, setEditingPost] = useState(null);
 
     const isAdmin = user?.email === club?.admin?.email;
     const isPendingClub = club.status === 'PENDING';
@@ -155,6 +160,9 @@ const ClubProfile = ({ club, user, onBack, onEditClick, onPublishEventClick, onU
         return path.startsWith('http') ? path : `http://localhost:8080${path}`;
     };
 
+    /**
+     * * Member 02 : Deletes a post from the club's feed.
+     */
     const handleDeletePost = async (postId) => {
         if (!isAdmin) return;
         const confirmed = await showConfirm("Delete post?", { isDanger: true, confirmText: "Delete", cancelText: "Cancel" });
@@ -178,6 +186,9 @@ const ClubProfile = ({ club, user, onBack, onEditClick, onPublishEventClick, onU
         } catch (e) { console.error(e); }
     };
 
+    /**
+     * * Member 02 : Cancels and deletes an event from the club.
+     */
     const handleDeleteEvent = async (eventId) => {
         if (!isAdmin) return;
         const confirmed = await showConfirm("Cancel event?", { isDanger: true, confirmText: "Cancel Event", cancelText: "Keep Event" });
@@ -193,6 +204,9 @@ const ClubProfile = ({ club, user, onBack, onEditClick, onPublishEventClick, onU
         } catch (e) { console.error(e); }
     };
 
+    /**
+     * * Member 02 : Sends a request for the current user to join the club.
+     */
     const handleJoinRequest = async () => {
         setIsJoining(true);
         try {
@@ -459,7 +473,7 @@ const ClubProfile = ({ club, user, onBack, onEditClick, onPublishEventClick, onU
                                             <div className="flex items-center gap-2"><MapPin size={14} className="text-emerald-400" /> {evt.location || "TBD"}</div>
                                         </div>
                                         <button
-                                            onClick={() => onViewEvent(evt)} 
+                                            onClick={() => onViewEvent(evt)}
                                             className="w-full mt-6 py-2.5 rounded-xl border border-white/20 font-semibold text-sm text-white hover:bg-emerald-500 hover:border-emerald-500 transition-all"
                                         >
                                             View Details
