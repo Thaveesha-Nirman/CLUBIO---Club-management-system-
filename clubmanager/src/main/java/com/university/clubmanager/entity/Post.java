@@ -1,5 +1,10 @@
 package com.university.clubmanager.entity;
 
+/**
+ * * Member 04 : origin/feature/social-engine-lead-fullstack-36672
+ * * Entity representing a user post, containing content, images, likes, and comments.
+ */
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -29,13 +34,11 @@ public class Post {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    // 👇 CHANGED: Stores WHO liked the post (User Emails) instead of just a number
     @ElementCollection
     @CollectionTable(name = "post_likes", joinColumns = @JoinColumn(name = "post_id"))
     @Column(name = "user_email")
     private Set<String> likedByUsers = new HashSet<>();
 
-    // 👇 ADDED: Relationship to Comments
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("post") // Prevents infinite loop when loading comments
     private List<Comment> comments = new ArrayList<>();
