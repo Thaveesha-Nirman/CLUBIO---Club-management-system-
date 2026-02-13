@@ -1,5 +1,10 @@
 package com.university.clubmanager.entity;
 
+/**
+ * * Member 03 : origin/feature/event-coordinator-fullstack-36681
+ * * Entity class representing an event organized by a club.
+ */
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,21 +21,21 @@ public class Event {
 
     private String title;
 
-    @Column(length = 2000) // Allow longer text
-    private String description; // <--- NEW
+    @Column(length = 2000) 
+    private String description; 
 
     private String location;
 
     private LocalDate date;
     private LocalTime time;
 
-    private String ticketPrice;    // <--- NEW
-    private String targetAudience; // <--- NEW
+    private String ticketPrice; 
+    private String targetAudience; 
 
     private String imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "club_id", nullable = false)
-    @JsonIgnoreProperties({"posts", "events", "members", "admin"})
+    @JsonIgnoreProperties({ "posts", "events", "members", "admin" })
     private Club club;
 }
