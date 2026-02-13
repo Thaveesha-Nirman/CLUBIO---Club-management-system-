@@ -1,4 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
+
+/**
+ * * Member 09 : Settings & System
+ * * Context for managing global alerts and confirmations.
+ */
 import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
 
 const AlertContext = createContext();
