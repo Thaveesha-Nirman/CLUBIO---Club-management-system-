@@ -524,5 +524,12 @@ const PostCard = ({ post, user, onDelete, onEdit, onImageClick, onClubClick, onU
     </div>
   );
 };
+/**
+ * Conclusion:
+ * This PostCard component provides a complete social post view with likes,
+ * comments, sharing, and image slider features. It improves user interaction
+ * and keeps the code reusable and easy to maintain.
+ */
+
 
 export default PostCard;
