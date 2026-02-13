@@ -1,5 +1,10 @@
 package com.university.clubmanager.controller;
 
+/**
+ * * Member 03 : origin/feature/event-coordinator-fullstack-36681
+ * * Controller for handling event creation, retrieval, and deletion.
+ */
+
 import com.university.clubmanager.entity.Club;
 import com.university.clubmanager.entity.Event;
 import com.university.clubmanager.repository.ClubRepository;
@@ -29,19 +34,21 @@ public class EventController {
 
     private final String UPLOAD_DIR = "uploads/";
 
-    // --- 1. CREATE EVENT (With Adding Image) ---
+    /**
+     * * Member 03 : Handles the creation of a new event with an optional image
+     * upload.
+     */
     @PostMapping("/create/{clubId}")
     public ResponseEntity<Event> createEvent(
             @PathVariable Long clubId,
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("location") String location,
-            @RequestParam("date") String date,           // String -> LocalDate
-            @RequestParam("time") String time,           // String -> LocalTime
+            @RequestParam("date") String date,
+            @RequestParam("time") String time,
             @RequestParam("ticketPrice") String ticketPrice,
             @RequestParam("targetAudience") String targetAudience,
-            @RequestParam(value = "file", required = false) MultipartFile file
-    ) {
+            @RequestParam(value = "file", required = false) MultipartFile file) {
         try {
             Club club = clubRepository.findById(clubId)
                     .orElseThrow(() -> new RuntimeException("Club not found"));
@@ -54,14 +61,14 @@ public class EventController {
             event.setTargetAudience(targetAudience);
             event.setClub(club);
 
-            // Convert String to Date/Time
             event.setDate(LocalDate.parse(date));
             event.setTime(LocalTime.parse(time));
 
             // Handle Image Upload
             if (file != null && !file.isEmpty()) {
                 Path uploadPath = Paths.get(UPLOAD_DIR);
-                if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+                if (!Files.exists(uploadPath))
+                    Files.createDirectories(uploadPath);
 
                 String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
                 Path filePath = uploadPath.resolve(fileName);
@@ -77,13 +84,20 @@ public class EventController {
         }
     }
 
-    // --- 2. GET ALL EVENTS (For Dashboard) ---
+    /**
+     * * Member 03 : Retrieves all events for the public dashboard.
+     */
     @GetMapping
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
+
+    // Add this inside your EventController class
     // Add this inside your EventController class
     @DeleteMapping("/{eventId}")
+    /**
+     * * Member 03 : Deletes an event by its ID.
+     */
     public ResponseEntity<?> deleteEvent(@PathVariable Long eventId) {
         return eventRepository.findById(eventId).map(event -> {
             eventRepository.delete(event);
