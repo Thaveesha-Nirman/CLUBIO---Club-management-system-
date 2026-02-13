@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 04 : origin/feature/social-engine-lead-fullstack-36672
+ * * UI component for creating and editing posts with image support.
+ */
 import { useAlert } from '../context/AlertContext';
 import { ArrowLeft, Image as ImageIcon, X, Send, Loader, Plus, Save } from 'lucide-react';
 
@@ -6,8 +11,8 @@ const CreatePost = ({ club, user, onBack, onPostCreated, postToEdit }) => {
   const { showAlert } = useAlert();
   const [content, setContent] = useState("");
   const [existingImages, setExistingImages] = useState([]);
-  const [newFiles, setNewFiles] = useState([]);           
-  const [newPreviews, setNewPreviews] = useState([]);     
+  const [newFiles, setNewFiles] = useState([]);
+  const [newPreviews, setNewPreviews] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -21,6 +26,9 @@ const CreatePost = ({ club, user, onBack, onPostCreated, postToEdit }) => {
     }
   }, [postToEdit]);
 
+  /**
+   * * Member 04 : Handles file selection and generates previews for new images.
+   */
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     const totalCount = existingImages.length + newFiles.length + files.length;
@@ -44,6 +52,9 @@ const CreatePost = ({ club, user, onBack, onPostCreated, postToEdit }) => {
     setNewPreviews(newPreviews.filter((_, i) => i !== indexToRemove));
   };
 
+  /**
+   * * Member 04 : Submits the new or edited post to the backend.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!content.trim() && existingImages.length === 0 && newFiles.length === 0) {
@@ -186,7 +197,7 @@ const CreatePost = ({ club, user, onBack, onPostCreated, postToEdit }) => {
             <div className="flex items-center gap-2">
               <label className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-xl hover:bg-white/5 transition text-emerald-400 text-sm font-bold">
                 <ImageIcon size={18} />
-                {postToEdit ? "Add More Photos" : "Photos/Videos"}
+                {postToEdit ? "Add More Photos" : "Photos"}
                 <input type="file" multiple accept="image/*" onChange={handleImageChange} className="hidden" />
               </label>
             </div>
