@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 08 : Student Hub Lead
+ * * Admin dashboard component for viewing and managing all registered users.
+ */
 import { useAlert } from '../context/AlertContext';
 import { Search, UserPlus, UserMinus, Trash2, Mail, Fingerprint, ShieldAlert } from 'lucide-react';
 
@@ -11,6 +16,9 @@ const AllMembers = ({ onSelectUser }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
+  /**
+   * * Member 08 : Fetches all users for administrative review.
+   */
   const fetchUsers = async () => {
     setLoading(true);
     try {
@@ -25,6 +33,9 @@ const AllMembers = ({ onSelectUser }) => {
 
   useEffect(() => { fetchUsers(); }, []);
 
+  /**
+   * * Member 08 : Performs administrative actions like promoting, demoting, or deleting users.
+   */
   const handleAction = async (userId, endpoint, method = "PUT", msg = "Action successful") => {
     const confirmed = await showConfirm("Confirm this administrative action?", { confirmText: "Confirm", cancelText: "Cancel" });
     if (!confirmed) return;
