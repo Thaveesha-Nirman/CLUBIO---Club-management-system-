@@ -1,5 +1,10 @@
 package com.university.clubmanager.entity;
 
+/**
+ * * Member 04 : Social Engine Lead
+ * * Entity representing a shared post by a user.
+ */
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,11 +16,11 @@ public class SharedPost {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user; // The person who shared it
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private Post post; // The original post being shared
+    private Post post;
 
     private LocalDateTime sharedAt;
 
@@ -24,12 +29,35 @@ public class SharedPost {
     }
 
     // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
-    public Post getPost() { return post; }
-    public void setPost(Post post) { this.post = post; }
-    public LocalDateTime getSharedAt() { return sharedAt; }
-    public void setSharedAt(LocalDateTime sharedAt) { this.sharedAt = sharedAt; }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public LocalDateTime getSharedAt() {
+        return sharedAt;
+    }
+
+    public void setSharedAt(LocalDateTime sharedAt) {
+        this.sharedAt = sharedAt;
+    }
 }
