@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 09 : Settings & System
+ * * Component for users to update their personal information and password.
+ */
 import { useAuth } from '../context/AuthContext';
 import { useAlert } from '../context/AlertContext';
 import { Camera, Save, User, Phone, Linkedin, Github, FileText, Mail, Hash } from 'lucide-react';
