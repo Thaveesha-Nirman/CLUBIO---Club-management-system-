@@ -1,5 +1,10 @@
 package com.university.clubmanager.entity;
 
+/**
+ * * Member 04 : origin/feature/social-engine-lead-fullstack-36672
+ * * Entity representing a comment made by a user on a post.
+ */
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,10 +25,10 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_email", referencedColumnName = "email")
-    private User user; // The person who wrote the comment
+    private User user; 
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
-    @JsonIgnoreProperties("comments") // Stops infinite loop
+    @JsonIgnoreProperties("comments") 
     private Post post;
 }
