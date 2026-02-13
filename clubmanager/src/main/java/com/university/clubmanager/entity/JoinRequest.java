@@ -1,5 +1,10 @@
 package com.university.clubmanager.entity;
 
+/**
+ * * Member 02 : origin/feature/club-join-request-36738
+ * * Entity representing a temporary request for a user to join a club.
+ */
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,18 +22,17 @@ public class JoinRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String studentId; // The ID user enters manually
+    private String studentId; 
 
-    // "PENDING", "APPROVED", "REJECTED"
     private String status = "PENDING";
 
     private LocalDateTime requestedAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user; // Who is asking?
+    private User user; 
 
     @ManyToOne
     @JoinColumn(name = "club_id")
-    private Club club; // Which club?
+    private Club club; 
 }
