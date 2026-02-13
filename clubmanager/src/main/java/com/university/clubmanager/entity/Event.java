@@ -2,7 +2,7 @@ package com.university.clubmanager.entity;
 
 /**
  * * Member 03 : origin/feature/event-coordinator-fullstack-36681
- * * Entity class representing an event organized by a club.
+ * * Entity class representing an event organized by  clubs.
  */
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
