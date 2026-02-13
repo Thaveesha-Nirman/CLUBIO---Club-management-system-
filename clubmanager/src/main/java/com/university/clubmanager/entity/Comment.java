@@ -13,6 +13,14 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "comments")
+```java
+/**
+ * Represents a user comment on a post.
+ * Contains the comment text, creation timestamp,
+ * and references to the associated User and Post.
+ */
+```
+
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
