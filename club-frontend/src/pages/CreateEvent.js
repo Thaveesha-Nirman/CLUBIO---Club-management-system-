@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+
+/**
+ * * Member 03 : origin/feature/event-coordinator-fullstack-36681
+ * * Form component for creating and publishing new events with image upload.
+ */
 import { useAlert } from '../context/AlertContext';
 import { ArrowLeft, Image as ImageIcon, X, Calendar, MapPin, DollarSign, Clock, Users, Save } from 'lucide-react';
 
@@ -21,6 +26,9 @@ const CreateEvent = ({ club, onBack, onEventCreated }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  /**
+   * * Member 03 : Handles image selection and generates a preview URL.
+   */
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -34,6 +42,9 @@ const CreateEvent = ({ club, onBack, onEventCreated }) => {
     setPreviewUrl(null);
   };
 
+  /**
+   * * Member 03 : Validates form data and constructs the payload for event creation.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -67,7 +78,7 @@ const CreateEvent = ({ club, onBack, onEventCreated }) => {
 
       showAlert("Event Published Successfully!", "success");
       onEventCreated(newEvent);
-      onBack(); 
+      onBack();
 
     } catch (error) {
       showAlert("Error creating event: " + error.message, "error");
