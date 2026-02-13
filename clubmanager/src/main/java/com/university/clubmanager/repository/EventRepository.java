@@ -1,5 +1,10 @@
 package com.university.clubmanager.repository;
 
+/**
+ * * Member 03 : origin/feature/event-coordinator-fullstack-36681
+ * * Repository for accessing Event data from the database.
+ */
+
 import com.university.clubmanager.entity.Club;
 import com.university.clubmanager.entity.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
