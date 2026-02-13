@@ -103,5 +103,7 @@ public class EventController {
             eventRepository.delete(event);
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
+        // Spring Boot REST controller for managing events: allows creating events with optional image upload, retrieving all events, and deleting events by ID.
+
     }
 }
