@@ -1,11 +1,16 @@
 package com.university.clubmanager.controller;
 
+/**
+ * * Member 02 : origin/feature/club-join-request-36738
+ * * REST Controller for managing club lifecycle, including registration, approval, and content creation.
+ */
+
 import com.university.clubmanager.entity.*;
 import com.university.clubmanager.repository.ClubRepository;
 import com.university.clubmanager.repository.EventRepository;
 import com.university.clubmanager.repository.MembershipRepository;
 import com.university.clubmanager.repository.PostRepository;
-import com.university.clubmanager.repository.UserRepository; // Needed for User lookup
+import com.university.clubmanager.repository.UserRepository;
 import com.university.clubmanager.service.ClubService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +30,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/clubs")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
 public class ClubController {
 
     @Autowired
@@ -51,7 +56,9 @@ public class ClubController {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
-    // --- 1. REGISTER NEW CLUB ---
+    /**
+     * * Member 02 : Handles the request to register a new club.
+     */
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Club club) {
         try {
@@ -61,27 +68,36 @@ public class ClubController {
         }
     }
 
-    // --- 2. GET PENDING CLUBS (ADMIN) ---
+    /**
+     * * Member 02 : Retrieves a list of clubs waiting for admin approval.
+     */
     @GetMapping("/pending")
     public ResponseEntity<List<Club>> getPending() {
         return ResponseEntity.ok(clubService.getPendingClubs());
     }
 
-    // --- 3. APPROVE CLUB (ADMIN) ---
+    /**
+     * * Member 02 : Approves a pending club and upgrades the requester to Club
+     * Admin.
+     */
     @PutMapping("/{id}/approve")
     public ResponseEntity<?> approve(@PathVariable Long id) {
         clubService.approveClub(id);
         return ResponseEntity.ok("Approved");
     }
 
-    // --- 4. REJECT CLUB (ADMIN) ---
+    /**
+     * * Member 02 : Rejects a club registration request.
+     */
     @DeleteMapping("/{id}/reject")
     public ResponseEntity<?> reject(@PathVariable Long id) {
         clubService.rejectClub(id);
         return ResponseEntity.ok("Rejected");
     }
 
-    // --- 5. GET MY OWN CLUB ---
+    /**
+     * * Member 02 : Fetches the club managed by the currently logged-in user.
+     */
     @GetMapping("/my-club")
     public ResponseEntity<?> getMyClub() {
         try {
@@ -91,7 +107,9 @@ public class ClubController {
         }
     }
 
-    // --- 6. CREATE POST ---
+    /**
+     * * Member 02 : Allows a club admin to create a post for their club.
+     */
     @PostMapping("/my-club/posts")
     public ResponseEntity<?> createPost(@RequestBody Post post) {
         try {
@@ -102,7 +120,9 @@ public class ClubController {
         }
     }
 
-    // --- 7. CREATE EVENT ---
+    /**
+     * * Member 02 : Allows a club admin to create an event for their club.
+     */
     @PostMapping("/my-club/events")
     public ResponseEntity<?> createEvent(@RequestBody Event event) {
         try {
@@ -113,7 +133,6 @@ public class ClubController {
         }
     }
 
-    // --- 8. PUBLIC FEEDS ---
     @GetMapping("/posts")
     public ResponseEntity<?> allPosts() {
         return ResponseEntity.ok(clubService.getAllPosts());
@@ -124,7 +143,6 @@ public class ClubController {
         return ResponseEntity.ok(clubService.getAllEvents());
     }
 
-    // --- 9. GET JOINED CLUBS ---
     @GetMapping("/joined")
     public ResponseEntity<?> getJoinedClubs() {
         try {
@@ -134,7 +152,10 @@ public class ClubController {
         }
     }
 
-    // --- 10. UPDATE CLUB SETTINGS ---
+    /**
+     * * Member 02 : Updates club details and settings, including logo and cover
+     * image.
+     */
     @PutMapping(value = "/{id}/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateClub(
             @PathVariable Long id,
@@ -143,10 +164,9 @@ public class ClubController {
             @RequestParam("description") String description,
             @RequestParam("contactNumber") String contactNumber,
             @RequestParam("whatsappGroupLink") String whatsappGroupLink,
-            @RequestParam("googleFormLink") String googleFormLink, // <--- ADDED THIS PARAMETER
+            @RequestParam("googleFormLink") String googleFormLink,
             @RequestParam(value = "logo", required = false) MultipartFile logo,
-            @RequestParam(value = "cover", required = false) MultipartFile cover
-    ) {
+            @RequestParam(value = "cover", required = false) MultipartFile cover) {
         try {
             Club club = clubRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Club not found"));
@@ -157,7 +177,7 @@ public class ClubController {
             club.setDescription(description);
             club.setContactNumber(contactNumber);
             club.setWhatsappGroupLink(whatsappGroupLink);
-            club.setGoogleFormLink(googleFormLink); // <--- SAVE GOOGLE FORM LINK
+            club.setGoogleFormLink(googleFormLink);
 
             String uploadDir = "uploads/";
             Path uploadPath = Paths.get(uploadDir);
@@ -189,27 +209,24 @@ public class ClubController {
         }
     }
 
-    // --- 11. GET ALL CLUBS ---
     @GetMapping
     public ResponseEntity<List<Club>> getAllClubs() {
         return ResponseEntity.ok(clubRepository.findAll());
     }
 
-    // --- 12. DELETE CLUB (Super Admin) ---
-    // --- 12. DELETE CLUB (Super Admin) ---
-    // --- 12. DELETE CLUB (Super Admin) - FIXED FOR DEEP DELETE ---
+
     @DeleteMapping("/{clubId}")
     @Transactional
+    /**
+     * * Member 02 : Deletes a club and all associated data (posts, events,
+     * memberships).
+     */
     public ResponseEntity<?> deleteClub(@PathVariable Long clubId) {
         return clubRepository.findById(clubId).map(club -> {
 
-            // 1. DELETE ALL POSTS SAFELY (This is the fix)
-            // We must find all posts and delete their "Share" references first
             List<Post> clubPosts = postRepository.findByClub(club);
             for (Post post : clubPosts) {
-                // Remove the "Shared" link from user profiles
                 postRepository.deleteShareReferences(post.getId());
-                // Now delete the post (Hibernate handles comments/likes via Cascade)
                 postRepository.delete(post);
             }
 
@@ -226,7 +243,9 @@ public class ClubController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // --- 13. REQUEST TO JOIN CLUB ---
+    /**
+     * * Member 02 : Submits a request for a user to join a specific club.
+     */
     @PostMapping("/{clubId}/join")
     public ResponseEntity<?> joinClub(@PathVariable Long clubId) {
         String email = getEmail();
@@ -244,7 +263,6 @@ public class ClubController {
         return ResponseEntity.ok("Request submitted successfully");
     }
 
-    // --- 14. GET MY MEMBERSHIPS (For "My Clubs" Page) ---
     @GetMapping("/my-memberships")
     public ResponseEntity<List<Membership>> getMyMemberships() {
         String email = getEmail();
@@ -252,13 +270,11 @@ public class ClubController {
         return ResponseEntity.ok(membershipRepository.findByUser(user));
     }
 
-    // --- 15. GET JOIN REQUESTS (For Club Admin) ---
     @GetMapping("/requests")
     public ResponseEntity<?> getJoinRequests() {
         String email = getEmail();
 
-        // Find memberships for clubs where the current user is admin
-        // Note: Ideally use a custom query in repository like: findByClub_Admin_EmailAndStatus(...)
+        
         List<Membership> pendingRequests = membershipRepository.findAll().stream()
                 .filter(m -> m.getClub().getAdmin().getEmail().equals(email))
                 .filter(m -> m.getStatus().equals("PENDING"))
@@ -267,13 +283,14 @@ public class ClubController {
         return ResponseEntity.ok(pendingRequests);
     }
 
-    // --- 16. APPROVE MEMBER ---
+    /**
+     * * Member 02 : Approves a user's request to join the club.
+     */
     @PutMapping("/requests/{membershipId}/approve")
     public ResponseEntity<?> approveMember(@PathVariable Long membershipId) {
         String email = getEmail();
 
         return membershipRepository.findById(membershipId).map(membership -> {
-            // Security: Ensure logged-in user is the admin of this club
             if (!membership.getClub().getAdmin().getEmail().equals(email)) {
                 return ResponseEntity.status(403).body("Not authorized");
             }
@@ -283,31 +300,29 @@ public class ClubController {
             return ResponseEntity.ok("Member approved");
         }).orElse(ResponseEntity.notFound().build());
     }
-    // --- 17. REJECT MEMBER (DELETE REQUEST) ---
+
     @DeleteMapping("/requests/{membershipId}/reject")
     public ResponseEntity<?> rejectMember(@PathVariable Long membershipId) {
         String email = getEmail();
         return membershipRepository.findById(membershipId).map(membership -> {
-            // Security: Ensure logged-in user is the admin of this club
             if (!membership.getClub().getAdmin().getEmail().equals(email)) {
                 return ResponseEntity.status(403).body("Not authorized");
             }
-            membershipRepository.delete(membership); // Simply delete the request
+            membershipRepository.delete(membership); 
             return ResponseEntity.ok("Member rejected");
         }).orElse(ResponseEntity.notFound().build());
     }
+
     @GetMapping("/my-managed")
     public ResponseEntity<List<Club>> getMyManagedClubs() {
-        String email = getEmail(); // Get logged-in user email
+        String email = getEmail(); 
         return ResponseEntity.ok(clubRepository.findByAdminEmail(email));
     }
-    // --- 18. GET CLUB MEMBERS (APPROVED ONLY) ---
+
     @GetMapping("/{clubId}/members")
     public ResponseEntity<List<User>> getClubMembers(@PathVariable Long clubId) {
-        // We only want users whose status is 'APPROVED'
         List<Membership> memberships = membershipRepository.findByClubIdAndStatus(clubId, "APPROVED");
 
-        // Extract the User objects from the memberships
         List<User> members = memberships.stream()
                 .map(Membership::getUser)
                 .toList();
@@ -315,9 +330,8 @@ public class ClubController {
         return ResponseEntity.ok(members);
     }
 
-    // --- 19. REMOVE MEMBER (KICK) ---
     @DeleteMapping("/{clubId}/members/{userId}")
-    @Transactional // Required for delete operations
+    @Transactional 
     public ResponseEntity<?> removeMember(@PathVariable Long clubId, @PathVariable Long userId) {
         String adminEmail = getEmail();
 
@@ -332,7 +346,7 @@ public class ClubController {
             return ResponseEntity.ok("Member removed successfully.");
         }).orElse(ResponseEntity.notFound().build());
     }
-    // --- 20. SHARE A POST ---
+
     @PostMapping("/posts/{postId}/share")
     @Transactional
     public ResponseEntity<?> sharePost(@PathVariable Long postId) {
@@ -351,7 +365,7 @@ public class ClubController {
         return ResponseEntity.ok("{\"message\": \"Post already shared\"}");
     }
 
-    // --- 21. GET SHARED POSTS FOR A USER ---
+    //  GET SHARED POSTS FOR A USER
     @GetMapping("/users/{userId}/shared-posts")
     public ResponseEntity<List<Post>> getSharedPosts(@PathVariable Long userId) {
         return userRepository.findById(userId)
@@ -359,7 +373,7 @@ public class ClubController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // --- 22. GET USER MEMBERSHIPS (For Profile View) ---
+    //  GET USER MEMBERSHIPS 
     @GetMapping("/users/{userId}/memberships")
     public ResponseEntity<List<Membership>> getUserMemberships(@PathVariable Long userId) {
         return userRepository.findById(userId)
@@ -367,23 +381,23 @@ public class ClubController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // --- 23. GET SPECIFIC USER DETAILS ---
+    //  GET SPECIFIC USER DETAILS 
     @GetMapping("/users/{userId}/details")
     public ResponseEntity<User> getUserDetails(@PathVariable Long userId) {
         return userRepository.findById(userId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-    // --- GET CLUBS MANAGED BY A USER ---
+
+    //  GET CLUBS MANAGED BY A USER 
     @GetMapping("/users/{userId}/managed-clubs")
     public ResponseEntity<List<Club>> getManagedClubs(@PathVariable Long userId) {
         return userRepository.findById(userId)
                 .map(user -> ResponseEntity.ok(clubRepository.findByAdminEmail(user.getEmail())))
                 .orElse(ResponseEntity.notFound().build());
     }
-    // --- ADD THIS TO ClubController.java ---
 
-    // --- 24. UNSHARE A POST (Remove from my profile) ---
+    //  UNSHARE A POST 
     @DeleteMapping("/posts/{postId}/share")
     @Transactional
     public ResponseEntity<?> unsharePost(@PathVariable Long postId) {
@@ -403,14 +417,11 @@ public class ClubController {
             return ResponseEntity.badRequest().body("{\"message\": \"Post was not shared by you\"}");
         }
     }
-    // --- SMART CLUB SEARCH ---
-    // --- SMART CLUB SEARCH ---
+
     @GetMapping("/search")
     public ResponseEntity<List<Club>> searchClubs(@RequestParam String name) {
-        // We pass "ACTIVE" as a string to match the repository change
         List<Club> results = clubRepository.findByNameContainingIgnoreCaseAndStatus(name, "ACTIVE");
         return ResponseEntity.ok(results);
     }
-
 
 }
