@@ -141,5 +141,6 @@ const InfoItem = ({ icon: Icon, label, value }) => (
     </div>
   </div>
 );
+// React component for displaying detailed information about a specific event, including image, description, audience, date, time, location, and ticket info, with interactive UI features.
 
 export default EventDetails;
