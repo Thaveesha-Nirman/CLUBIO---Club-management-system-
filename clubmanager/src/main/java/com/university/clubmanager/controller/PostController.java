@@ -1,11 +1,16 @@
 package com.university.clubmanager.controller;
 
+/**
+ * * Member 04 : origin/feature/social-engine-lead-fullstack-36672
+ * * Controller handling social interactions, including creating posts, liking, and commenting.
+ */
+
 import com.university.clubmanager.entity.Club;
 import com.university.clubmanager.entity.Comment;
 import com.university.clubmanager.entity.Post;
 import com.university.clubmanager.entity.User;
 import com.university.clubmanager.repository.ClubRepository;
-import com.university.clubmanager.repository.CommentRepository; // <--- VITAL IMPORT
+import com.university.clubmanager.repository.CommentRepository;
 import com.university.clubmanager.repository.PostRepository;
 import com.university.clubmanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +31,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/posts")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
+@CrossOrigin(origins = { "http://localhost:3000", "http://localhost:3001" })
 public class PostController {
 
     @Autowired
@@ -43,13 +48,15 @@ public class PostController {
 
     private final String UPLOAD_DIR = "uploads/";
 
-    // --- 1. CREATE POST ---
+    /**
+     * * Member 04 : Handles the creation of a new post with optional multiple image
+     * uploads.
+     */
     @PostMapping("/create/{clubId}")
     public ResponseEntity<Post> createPost(
             @PathVariable Long clubId,
             @RequestParam("content") String content,
-            @RequestParam(value = "files", required = false) MultipartFile[] files
-    ) {
+            @RequestParam(value = "files", required = false) MultipartFile[] files) {
         try {
             Club club = clubRepository.findById(clubId)
                     .orElseThrow(() -> new RuntimeException("Club not found"));
@@ -84,15 +91,17 @@ public class PostController {
         }
     }
 
-    // --- 2. GET ALL POSTS ---
     @GetMapping
     public List<Post> getAllPosts() {
         return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
-    // --- 3. DELETE POST ---
+    /**
+     * * Member 04 : Deletes a post and cleans up associated data like shares and
+     * comments.
+     */
     @DeleteMapping("/{postId}")
-    @Transactional // <--- VITAL: Required for the custom delete to work
+    @Transactional
     public ResponseEntity<?> deletePost(@PathVariable Long postId) {
         return postRepository.findById(postId).map(post -> {
 
@@ -106,7 +115,9 @@ public class PostController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // --- 4. TOGGLE LIKE ---
+    /**
+     * * Member 04 : Toggles the like status for a post by the current user.
+     */
     @PutMapping("/{postId}/like")
     public ResponseEntity<Post> toggleLike(@PathVariable Long postId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -123,7 +134,9 @@ public class PostController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // --- 5. ADD COMMENT ---
+    /**
+     * * Member 04 : Adds a comment to a specific post.
+     */
     @PostMapping("/{postId}/comment")
     public ResponseEntity<Post> addComment(@PathVariable Long postId, @RequestBody Map<String, String> payload) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -145,13 +158,11 @@ public class PostController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // --- 6. DELETE COMMENT (FIXED) ---
     @DeleteMapping("/{postId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
         return commentRepository.findById(commentId).map(comment -> {
-            // SECURITY: Only allow deletion if the logged-in user owns the comment
             if (!comment.getUser().getEmail().equals(email)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can only delete your own comments");
             }
@@ -161,18 +172,15 @@ public class PostController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // --- 7. EDIT COMMENT (FIXED FOR 403 ERROR) ---
     @PutMapping("/{postId}/comments/{commentId}")
     public ResponseEntity<?> updateComment(
             @PathVariable Long postId,
             @PathVariable Long commentId,
-            @RequestBody Map<String, String> payload
-    ) {
+            @RequestBody Map<String, String> payload) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         String newText = payload.get("text");
 
         return commentRepository.findById(commentId).map(comment -> {
-            // SECURITY: Only allow edit if the logged-in user owns the comment
             if (!comment.getUser().getEmail().equals(email)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can only edit your own comments");
             }
@@ -182,41 +190,34 @@ public class PostController {
             return ResponseEntity.ok(comment);
         }).orElse(ResponseEntity.notFound().build());
     }
-    // --- ADD THIS TO PostController.java ---
-
-    // --- 8. EDIT POST CONTENT ---
-    // --- 8. EDIT POST (TEXT + IMAGES) ---
+    
     @PutMapping("/{postId}")
     public ResponseEntity<?> updatePost(
             @PathVariable Long postId,
             @RequestParam("content") String content,
-            // 1. Receive list of OLD images to KEEP (Frontend sends this)
+            // 1. Receive list of OLD images to KEEP 
             @RequestParam(value = "remainingImages", required = false) List<String> remainingImages,
             // 2. Receive NEW images to ADD
-            @RequestParam(value = "files", required = false) MultipartFile[] newFiles
-    ) {
+            @RequestParam(value = "files", required = false) MultipartFile[] newFiles) {
         return postRepository.findById(postId).map(post -> {
             post.setContent(content);
 
-            // --- A. HANDLE IMAGE DELETIONS ---
             // 1. Get current images from DB
             List<String> currentImages = post.getImageUrls();
-            if (currentImages == null) currentImages = new ArrayList<>();
+            if (currentImages == null)
+                currentImages = new ArrayList<>();
 
-            // 2. Get the list of images the user wants to KEEP
-            // (If null, it means user deleted everything)
+      
             List<String> imagesToKeep = (remainingImages != null) ? remainingImages : new ArrayList<>();
 
-            // 3. Update the post's image list to only contain the "Keep List"
-            // (Hibernate will update the DB. We skip physical file deletion for safety/speed,
-            // but you could add Files.delete() here if you wanted to save space)
+      
             List<String> finalImageList = new ArrayList<>(imagesToKeep);
 
-            // --- B. HANDLE NEW IMAGE UPLOADS ---
             if (newFiles != null && newFiles.length > 0) {
                 try {
                     Path uploadPath = Paths.get(UPLOAD_DIR);
-                    if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+                    if (!Files.exists(uploadPath))
+                        Files.createDirectories(uploadPath);
 
                     for (MultipartFile file : newFiles) {
                         if (!file.isEmpty()) {
