@@ -18,4 +18,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     // 2. Delete all events linked to a club (Crucial for Super Admin Delete)
     void deleteByClub(Club club);
-}
+
+    // Repository interface for Event entity to handle database operations like finding and deleting events by club.
+
+}  
