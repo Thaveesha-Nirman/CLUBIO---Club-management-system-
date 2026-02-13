@@ -1,4 +1,9 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
+
+/**
+ * * Member 06 : Mainly UI/UX
+ * * Context for managing UI states like toasts and modals.
+ */
 import { CheckCircle, AlertCircle, X, Info } from 'lucide-react';
 
 const UIContext = createContext();
@@ -13,10 +18,10 @@ export const UIProvider = ({ children }) => {
 
     const showToast = useCallback((message, type = 'success') => {
         const id = Date.now();
-        const cleanMessage = message.replace(/✅|❌|⚠️|🔥/g, '').trim(); 
-        
+        const cleanMessage = message.replace(/✅|❌|⚠️|🔥/g, '').trim();
+
         setToasts(prev => [...prev, { id, message: cleanMessage, type }]);
-        
+
         setTimeout(() => {
             setToasts(prev => prev.filter(t => t.id !== id));
         }, 4000);
@@ -43,20 +48,18 @@ export const UIProvider = ({ children }) => {
     return (
         <UIContext.Provider value={{ showToast, showConfirm }}>
             {children}
-            
+
             <div className="fixed top-24 right-6 z-[200] flex flex-col gap-4 pointer-events-none">
                 {toasts.map(toast => (
-                    <div 
-                        key={toast.id} 
-                        className={`pointer-events-auto animate-slide-in relative overflow-hidden backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] rounded-2xl p-4 flex items-start gap-4 min-w-[320px] max-w-sm ${
-                            toast.type === 'success' ? 'bg-emerald-500/20 shadow-emerald-500/10' : 
-                            toast.type === 'error' ? 'bg-red-500/20 shadow-red-500/10' : 'bg-blue-500/20 shadow-blue-500/10'
-                        }`}
+                    <div
+                        key={toast.id}
+                        className={`pointer-events-auto animate-slide-in relative overflow-hidden backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] rounded-2xl p-4 flex items-start gap-4 min-w-[320px] max-w-sm ${toast.type === 'success' ? 'bg-emerald-500/20 shadow-emerald-500/10' :
+                                toast.type === 'error' ? 'bg-red-500/20 shadow-red-500/10' : 'bg-blue-500/20 shadow-blue-500/10'
+                            }`}
                     >
-                        <div className={`mt-0.5 w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-white/10 ${
-                            toast.type === 'success' ? 'bg-emerald-500/30' : 
-                            toast.type === 'error' ? 'bg-red-500/30' : 'bg-blue-500/30'
-                        }`}>
+                        <div className={`mt-0.5 w-8 h-8 rounded-full flex items-center justify-center shrink-0 border border-white/10 ${toast.type === 'success' ? 'bg-emerald-500/30' :
+                                toast.type === 'error' ? 'bg-red-500/30' : 'bg-blue-500/30'
+                            }`}>
                             {toast.type === 'success' && <CheckCircle className="w-4 h-4 text-emerald-200" />}
                             {toast.type === 'error' && <AlertCircle className="w-4 h-4 text-red-200" />}
                             {toast.type === 'info' && <Info className="w-4 h-4 text-blue-200" />}
@@ -81,15 +84,15 @@ export const UIProvider = ({ children }) => {
                             </div>
                             <h3 className="text-xl font-bold text-white">Confirmation</h3>
                             <p className="text-white/70 mb-6">{confirmModal.message}</p>
-                            
+
                             <div className="flex gap-4 w-full">
-                                <button 
+                                <button
                                     onClick={confirmModal.onCancel}
                                     className="flex-1 py-3 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl font-semibold transition-all"
                                 >
                                     Cancel
                                 </button>
-                                <button 
+                                <button
                                     onClick={confirmModal.onConfirm}
                                     className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/20 rounded-xl font-bold transition-all"
                                 >
