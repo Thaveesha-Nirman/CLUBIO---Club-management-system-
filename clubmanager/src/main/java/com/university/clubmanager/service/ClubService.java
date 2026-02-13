@@ -1,5 +1,10 @@
 package com.university.clubmanager.service;
 
+/**
+ * * Member 02 : origin/feature/club-join-request-36738
+ * * Service layer for club-related business logic and transaction management.
+ */
+
 import com.university.clubmanager.entity.Club;
 import com.university.clubmanager.entity.Event;
 import com.university.clubmanager.entity.Post;
@@ -29,7 +34,10 @@ public class ClubService {
     @Autowired
     private EventRepository eventRepository;
 
-    // 1. Register
+    //  Register
+    /**
+     * * Member 02 : Validates and saves a new club registration request.
+     */
     public Club createClubRequest(Club clubData, String userEmail) {
         if (clubRepository.existsByName(clubData.getName())) {
             throw new RuntimeException("Club name already exists!");
@@ -41,13 +49,16 @@ public class ClubService {
         return clubRepository.save(clubData);
     }
 
-    // 2. Pending List
+    //  Pending List
     public List<Club> getPendingClubs() {
         return clubRepository.findByStatus("PENDING");
     }
 
     // 3. Approve
     @Transactional
+    /**
+     * * Member 02 : Updates club status to ACTIVE and promotes the owner to Admin.
+     */
     public void approveClub(Long clubId) {
         Club club = clubRepository.findById(clubId).orElseThrow(() -> new RuntimeException("Club not found"));
         club.setStatus("ACTIVE");
@@ -59,7 +70,6 @@ public class ClubService {
             userRepository.save(admin);
         }
     }
-
 
     // 4. Reject
     public void rejectClub(Long clubId) {
@@ -90,18 +100,24 @@ public class ClubService {
     }
 
     // 8. Public Feed
-    public List<Post> getAllPosts() { return postRepository.findAll(); }
-    public List<Event> getAllEvents() { return eventRepository.findAll(); }
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
 
-    // --- 9. GET ALL MY CLUBS (Member OR Admin) ---
+    public List<Event> getAllEvents() {
+        return eventRepository.findAll();
+    }
+
+    //  9 GET ALL MY CLUBS
+    /**
+     * * Member 02 : Returns a distinct list of clubs the user has joined or
+     * manages.
+     */
     public List<Club> getJoinedClubs(String userEmail) {
-        // A. Get clubs I joined as a member
         List<Club> memberClubs = clubRepository.findByMembersEmail(userEmail);
 
-        // B. Get clubs I own as Admin
         List<Club> adminClubs = clubRepository.findByAdminEmail(userEmail);
 
-        // C. Combine them (Set prevents duplicates)
         Set<Club> distinctClubs = new HashSet<>(memberClubs);
         distinctClubs.addAll(adminClubs);
 
