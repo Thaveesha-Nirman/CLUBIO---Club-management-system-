@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+
+/**
+ * * Member 10 : Brand & Support
+ * * Support center page with FAQs and contact options.
+ */
 import { useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft, HelpCircle, ChevronDown, ChevronUp, 
+import {
+  ArrowLeft, HelpCircle, ChevronDown, ChevronUp,
   Calendar, Users, Edit3, Plus, Trash2, ShieldCheck,
   ChevronRight, Sparkles, AlertCircle, X
 } from 'lucide-react';
@@ -13,7 +18,7 @@ const Support = () => {
   const navigate = useNavigate();
   const [mounted, setMounted] = useState(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
-  const [openFaq, setOpenFaq] = useState(null); 
+  const [openFaq, setOpenFaq] = useState(null);
   const footerRef = useRef(null);
 
   useEffect(() => {
@@ -58,15 +63,15 @@ const Support = () => {
       a: "Go to the 'Explore' section and click 'Start a New Club'. Fill out the official application form. Once submitted, the Super Admin will review and approve your request."
     },
     {
-        icon: Edit3,
-        q: "How do I update my profile details?",
-        a: "Navigate to 'Profile Settings' from the sidebar. You can update your bio, faculty, and department there. Don't forget to click 'Save Changes'!"
+      icon: Edit3,
+      q: "How do I update my profile details?",
+      a: "Navigate to 'Profile Settings' from the sidebar. You can update your bio, faculty, and department there. Don't forget to click 'Save Changes'!"
     }
   ];
 
   return (
     <div className="relative font-sans text-white selection:bg-emerald-500 selection:text-white">
-      
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
         .font-montserrat { font-family: "Montserrat", sans-serif; font-weight: 700; }
@@ -90,7 +95,7 @@ const Support = () => {
 
         html { scroll-behavior: smooth; }
       `}</style>
-      
+
       <div className="fixed inset-0 z-[-50]">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-900"></div>
         <div className="absolute inset-0 overflow-hidden">
@@ -104,7 +109,7 @@ const Support = () => {
         <nav className={`relative z-10 flex justify-between items-center p-6 max-w-6xl mx-auto w-full transition-all duration-1000 transform ${mounted ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0'}`}>
           <div className="flex items-center gap-4">
             <div className="p-1.5 bg-white/90 rounded-lg shadow-lg backdrop-blur-sm">
-               <img src={logoNsbm} alt="NSBM Logo" className="w-12 h-auto object-contain" />
+              <img src={logoNsbm} alt="NSBM Logo" className="w-12 h-auto object-contain" />
             </div>
             <span className="hidden sm:inline tracking-widest text-base border-l border-white/30 pl-4 font-montserrat uppercase font-black">CLUBIO</span>
           </div>
@@ -114,10 +119,10 @@ const Support = () => {
         </nav>
 
         <main className={`relative z-10 max-w-3xl mx-auto px-6 py-4 flex-grow w-full transition-all duration-1000 transform ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          
+
           <div className="relative overflow-hidden rounded-[2.5rem] border border-white/20 shadow-2xl backdrop-blur-sm bg-white/5 p-8 md:p-12">
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white/10 to-transparent pointer-events-none"></div>
-            
+
             <div className="text-center mb-12">
               <h1 className="text-3xl md:text-5xl font-extrabold tracking-tighter uppercase mb-3">
                 Help <span className="text-white drop-shadow-2xl">Center.</span>
@@ -129,10 +134,10 @@ const Support = () => {
               <h3 className="text-[10px] font-black mb-4 flex items-center gap-2 px-2 uppercase tracking-[0.3em] text-white/40">
                 <HelpCircle size={12} /> Frequently Asked Questions
               </h3>
-              
+
               {faqs.map((faq, i) => (
                 <div key={i} className="relative overflow-hidden rounded-2xl border border-white/10 backdrop-blur-md bg-white/5 transition-all group">
-                  <button 
+                  <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                     className="w-full p-5 flex items-center justify-between hover:bg-white/5 transition-all text-left"
                   >
@@ -144,7 +149,7 @@ const Support = () => {
                     </div>
                     {openFaq === i ? <ChevronUp size={16} className="text-emerald-400" /> : <ChevronDown size={16} className="text-white/20" />}
                   </button>
-                  
+
                   {openFaq === i && (
                     <div className="px-6 pb-6 pt-0 animate-slide-in">
                       <div className="h-[1px] bg-white/10 w-full mb-4"></div>
@@ -158,8 +163,8 @@ const Support = () => {
             </div>
 
             <div className="mt-12 p-6 rounded-2xl bg-emerald-950/20 border border-emerald-500/20 text-center">
-                <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Still need help?</p>
-                <p className="text-xs text-white/50">Contact your Faculty Representative or visit the IT Student Center.</p>
+              <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest mb-1">Still need help?</p>
+              <p className="text-xs text-white/50">Contact your Faculty Representative or visit the IT Student Center.</p>
             </div>
 
           </div>
@@ -175,8 +180,8 @@ const Support = () => {
       <footer ref={footerRef} className="relative z-10 w-full py-10 px-6 border-t border-white/10 backdrop-blur-md bg-black/40">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs text-emerald-100/50 tracking-wide text-center md:text-left">
           <div className="mb-4 md:mb-0">
-              <p className="font-bold text-white mb-1">© 2026 NSBM Green University</p>
-              <p className="opacity-50">Innovation Hub Support</p>
+            <p className="font-bold text-white mb-1">© 2026 NSBM Green University</p>
+            <p className="opacity-50">Innovation Hub Support</p>
           </div>
           <div className="flex gap-6 font-medium">
             <a href="#" className="hover:text-white transition-colors">Privacy</a>
