@@ -1,5 +1,10 @@
 package com.university.clubmanager.controller;
 
+/**
+ * * Member 06 : Mainly UI/UX
+ * * Controller for handling file uploads (images, documents).
+ */
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
