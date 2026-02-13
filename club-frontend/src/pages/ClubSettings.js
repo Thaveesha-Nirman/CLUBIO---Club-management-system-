@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 09 : Settings & System
+ * * Component for managing club settings and profile customization.
+ */
 import { useAlert } from '../context/AlertContext';
 import { Save, X, Upload, Image as ImageIcon, Link as LinkIcon, MessageCircle, FileText } from 'lucide-react';
 
@@ -9,8 +14,8 @@ const ClubSettings = ({ club, onBack, onUpdateClub }) => {
     category: '',
     description: '',
     contactNumber: '',
-    whatsappGroupLink: '', 
-    googleFormLink: ''     
+    whatsappGroupLink: '',
+    googleFormLink: ''
   });
 
   const [logoPreview, setLogoPreview] = useState(null);
@@ -63,8 +68,8 @@ const ClubSettings = ({ club, onBack, onUpdateClub }) => {
       data.append("category", formData.category);
       data.append("description", formData.description);
       data.append("contactNumber", formData.contactNumber);
-      data.append("whatsappGroupLink", formData.whatsappGroupLink); 
-      data.append("googleFormLink", formData.googleFormLink);    
+      data.append("whatsappGroupLink", formData.whatsappGroupLink);
+      data.append("googleFormLink", formData.googleFormLink);
 
       if (logoFile) data.append("logo", logoFile);
       if (coverFile) data.append("cover", coverFile);
