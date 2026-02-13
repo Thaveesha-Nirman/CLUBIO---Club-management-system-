@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 08 : Student Hub Lead
+ * * UI component displaying the user's club memberships and managed clubs.
+ */
 import { useAlert } from '../context/AlertContext';
 import {
     ArrowRight, ShieldCheck, Users, Clock, LayoutDashboard,
@@ -12,6 +17,9 @@ const MyClubs = ({ user, onViewClub }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        /**
+         * * Member 08 : Fetches the user's managed clubs and active memberships.
+         */
         const fetchData = async () => {
             try {
                 const storedData = localStorage.getItem('clubUser');
