@@ -1,5 +1,10 @@
 package com.university.clubmanager.dto;
 
+/**
+ * * Member 09 : Settings & System
+ * * DTO for authentication response containing token and user info.
+ */
+
 import lombok.Data;
 
 /**
@@ -9,18 +14,16 @@ import lombok.Data;
  */
 @Data
 public class AuthResponse {
-    // --- IDENTITY & SECURITY ---
-    private Long id;              // Unique database ID (Critical for Profile loading)
-    private String username;      // Display name (First Name)
-    private String email;         // User's login email
-    private String role;          // ROLE_STUDENT, ROLE_ADMIN, or ROLE_SUPERADMIN
-    private String token;         // JWT Bearer Token
-    private String message;       // Success/Error message
+    private Long id; 
+    private String username; // Display name (First Name)
+    private String email; // User's login email
+    private String role; // ROLE_STUDENT, ROLE_ADMIN, or ROLE_SUPERADMIN
+    private String token; // JWT Bearer Token
+    private String message; // Success/Error message
 
-    // --- ACADEMIC & PROFILE DETAILS ---
-    private String studentId;     // University Registration Number
-    private String faculty;       // Faculty of the student/lecturer
-    private String department;    // Department of the user
-    private String batch;         // Academic intake batch
-    private String profileImage;  // URL/Path to the profile picture
+    private String studentId; // University Registration Number
+    private String faculty; // Faculty of the student/lecturer
+    private String department; // Department of the user
+    private String batch; // Academic intake batch
+    private String profileImage; // URL/Path to the profile picture
 }
