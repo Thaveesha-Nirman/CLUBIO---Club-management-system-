@@ -1,8 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+
+/**
+ * * Member 10 : Brand & Support
+ * * Features showcase page highlighting platform capabilities.
+ */
 import { useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft, Zap, Shield, Globe, MessageSquare, 
-  Calendar, Users, ChevronDown, ChevronUp, Sparkles, AlertCircle, X 
+import {
+  ArrowLeft, Zap, Shield, Globe, MessageSquare,
+  Calendar, Users, ChevronDown, ChevronUp, Sparkles, AlertCircle, X
 } from 'lucide-react';
 
 import pattern from '../assets/pattern.png';
@@ -46,7 +51,7 @@ const Features = () => {
 
   return (
     <div className="relative font-sans text-white selection:bg-emerald-500 selection:text-white">
-      
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
         .font-montserrat { font-family: "Montserrat", sans-serif; font-weight: 700; }
@@ -82,7 +87,7 @@ const Features = () => {
           </div>
         </div>
       )}
-      
+
       <div className="fixed inset-0 z-[-50]">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-600 to-teal-900"></div>
         <div className="absolute inset-0 overflow-hidden">
@@ -96,7 +101,7 @@ const Features = () => {
         <nav className={`relative z-10 flex justify-between items-center p-6 max-w-7xl mx-auto w-full transition-all duration-1000 transform ${mounted ? 'translate-y-0 opacity-100' : '-translate-y-20 opacity-0'}`}>
           <div className="text-xl md:text-2xl font-bold tracking-wide flex items-center gap-4">
             <div className="p-2 bg-white/90 rounded-xl shadow-lg backdrop-blur-sm">
-               <img src={logoNsbm} alt="NSBM Logo" className="w-16 h-auto object-contain" />
+              <img src={logoNsbm} alt="NSBM Logo" className="w-16 h-auto object-contain" />
             </div>
             <span className="hidden sm:inline tracking-widest text-lg border-l border-white/30 pl-4 font-montserrat uppercase">CLUBIO</span>
           </div>
@@ -108,7 +113,7 @@ const Features = () => {
         <main className={`relative z-10 max-w-7xl mx-auto px-6 py-12 flex-grow w-full transition-all duration-1000 transform ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="text-center mb-16">
             <h1 className="text-5xl lg:text-7xl font-extrabold leading-tight mb-6 drop-shadow-lg">
-              Explore Our <br/> <span className="text-white drop-shadow-2xl">Features.</span>
+              Explore Our <br /> <span className="text-white drop-shadow-2xl">Features.</span>
             </h1>
             <p className="text-lg lg:text-xl text-emerald-50 max-w-2xl mx-auto leading-relaxed font-light">
               We provide a creative environment for students to manage their club activities, join events, and connect with peers through our secure portal.
@@ -117,8 +122,8 @@ const Features = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20">
             {featuresList.map((f, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 onClick={() => showToast(`${f.title} is fully integrated.`, 'success')}
                 className="relative overflow-hidden rounded-[2rem] border border-white/20 shadow-2xl backdrop-blur-sm bg-white/5 p-8 hover:bg-white/10 transition-all duration-500 group cursor-pointer"
               >
@@ -143,8 +148,8 @@ const Features = () => {
       <footer ref={footerRef} className="relative z-10 w-full py-12 px-6 border-t border-white/10 backdrop-blur-md bg-black/40">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-emerald-100/70 tracking-wide">
           <div className="flex flex-col items-center md:items-start mb-4 md:mb-0">
-              <p className="font-bold text-white mb-1">© 2026 NSBM Green University</p>
-              <p className="text-xs">Excellence in Education</p>
+            <p className="font-bold text-white mb-1">© 2026 NSBM Green University</p>
+            <p className="text-xs">Excellence in Education</p>
           </div>
           <div className="flex gap-8 font-medium">
             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
