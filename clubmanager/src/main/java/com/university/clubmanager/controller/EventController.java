@@ -29,7 +29,7 @@ public class EventController {
 
     private final String UPLOAD_DIR = "uploads/";
 
-    // --- 1. CREATE EVENT (With Image) ---
+    // --- 1. CREATE EVENT (With Adding Image) ---
     @PostMapping("/create/{clubId}")
     public ResponseEntity<Event> createEvent(
             @PathVariable Long clubId,
