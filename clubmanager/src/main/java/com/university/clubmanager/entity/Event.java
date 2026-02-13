@@ -38,4 +38,7 @@ public class Event {
     @JoinColumn(name = "club_id", nullable = false)
     @JsonIgnoreProperties({ "posts", "events", "members", "admin" })
     private Club club;
+
+    // Stores event information (title, description, place, date, time, price, audience, image) and connects each event to one club using a foreign key while avoiding JSON infinite loops.
+
 }
