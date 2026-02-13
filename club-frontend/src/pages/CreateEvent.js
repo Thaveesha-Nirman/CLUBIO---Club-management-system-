@@ -190,5 +190,6 @@ const CreateEvent = ({ club, onBack, onEventCreated }) => {
     </div>
   );
 };
+// React component for creating and publishing new events, including form fields, image upload, validation, and API submission to the backend.
 
 export default CreateEvent;
