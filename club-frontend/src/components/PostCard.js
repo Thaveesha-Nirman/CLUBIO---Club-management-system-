@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 04 : origin/feature/social-engine-lead-fullstack-36672
+ * * Reusable component for displaying social feed posts with likes and comments.
+ */
 import { useAlert } from '../context/AlertContext';
 import {
   Heart, MessageCircle, MoreHorizontal, Send, Trash2, Edit2,
@@ -140,6 +145,9 @@ const PostCard = ({ post, user, onDelete, onEdit, onImageClick, onClubClick, onU
     return `http://localhost:8080${cleanPath}`;
   };
 
+  /**
+   * * Member 04 : Toggles the like status for a post by the current user.
+   */
   const handleLike = async () => {
     if (isLiking || !user) return;
     setIsLiking(true);
@@ -175,6 +183,9 @@ const PostCard = ({ post, user, onDelete, onEdit, onImageClick, onClubClick, onU
     }
   };
 
+  /**
+   * * Member 04 : Shares the post to the user's profile activity.
+   */
   const handleShare = async () => {
     if (isSharing || !user) return;
 
@@ -207,6 +218,9 @@ const PostCard = ({ post, user, onDelete, onEdit, onImageClick, onClubClick, onU
     }
   };
 
+  /**
+   * * Member 04 : Submits a new comment to the backend.
+   */
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     if (!commentText.trim()) return;
