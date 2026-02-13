@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 07 : Management Lead
+ * * Dashboard for club admins to manage posts and events.
+ */
 import { useUI } from '../context/UIContext';
 import { PlusCircle, Calendar, MessageSquare, MapPin, Clock, AlertTriangle } from 'lucide-react';
 
