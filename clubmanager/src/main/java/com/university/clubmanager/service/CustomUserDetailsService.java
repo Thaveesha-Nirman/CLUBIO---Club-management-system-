@@ -1,5 +1,10 @@
 package com.university.clubmanager.service;
 
+/**
+ * * Member 08 : Student Hub Lead
+ * * Service for loading user details specifically for Spring Security authentication.
+ */
+
 import com.university.clubmanager.entity.User;
 import com.university.clubmanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +24,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        // 1. Find the user in the DB
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        // 2. Convert to Spring Security UserDetails
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority(user.getRole()))
-        );
+                Collections.singletonList(new SimpleGrantedAuthority(user.getRole())));
     }
 }
