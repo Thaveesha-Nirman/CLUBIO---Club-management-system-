@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 05 : origin/feature/relationship-lead-fullstack-36704
+ * * UI component that displays a searchable list of the user's accepted friends.
+ */
 import { useAlert } from '../context/AlertContext';
 import { MessageCircle, UserMinus, Search, Users, MapPin, GraduationCap, Check } from 'lucide-react';
 
@@ -11,6 +16,9 @@ const FriendsList = ({ onUserClick }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
+  /**
+   * * Member 05 : Fetches the list of accepted friends from the backend.
+   */
   const fetchFriends = async () => {
     setLoading(true);
     try {
@@ -34,6 +42,9 @@ const FriendsList = ({ onUserClick }) => {
     fetchFriends();
   }, []);
 
+  /**
+   * * Member 05 : Removes a selected friend after confirmation.
+   */
   const handleUnfriend = async (friendshipId) => {
     const confirmed = await showConfirm("Remove this friend?", { isDanger: true, confirmText: "Remove", cancelText: "Cancel" });
     if (!confirmed) return;
