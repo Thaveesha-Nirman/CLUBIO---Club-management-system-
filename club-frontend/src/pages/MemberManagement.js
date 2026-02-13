@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
+/**
+ * * Member 07 : Management Lead
+ * * Component for club admins to manage existing members (view, remove).
+ */
 import { useAlert } from '../context/AlertContext';
 import {
     Search, UserMinus, ArrowLeft, Mail,
