@@ -277,17 +277,57 @@ MEMBER 10 :
 
 
 
-Contribution Percentage for the project by members  : 
+## Contribution Percentage for the project by members  : 
 
 
-Member 01 - Thaveesha-Nirman :  10%
+Member 01 - Thaveesha-Nirman :  10%  
+
 Member 02  - yohaniranawaka63-glitch :  10%
+
 Member 03  -  NilakshaChathuranga :  10%
+
 Member 04  - kwtnpothuwila :  10%
+
 Member 05  - P K D Nethmika  :  10%
+
 Member 06 - W.M.D.T.Warshakoon :  10%
+
 Member 07 - rphbprabodhani :  10%
+
 Member 08 - PasiKatawala :  10%
+
 Member 09 - Dewmi-16 :  10%
+
 Member 10 - Lasini-Ravishani-Rathnayake :  10%
+
+
+## Screenshots
+
+
+   <img width="1881" height="982" alt="image" src="https://github.com/user-attachments/assets/3b7663b3-30a5-40d1-8964-f585b95177d0" />
+   <img width="1872" height="1036" alt="image" src="https://github.com/user-attachments/assets/ea9dcfec-9e5f-4102-9039-5080942f68fd" />
+   <img width="1909" height="1055" alt="image" src="https://github.com/user-attachments/assets/ff073dac-1a2c-4a49-a1da-56d00f0c00fc" />
+   <img width="1895" height="1049" alt="image" src="https://github.com/user-attachments/assets/39df81d3-22d9-47c8-987a-2bc256cba253" />
+   <img width="1869" height="1023" alt="image" src="https://github.com/user-attachments/assets/e753dbc1-d816-4b47-81af-e1f786ce9df7" />
+   <img width="1875" height="1030" alt="image" src="https://github.com/user-attachments/assets/ef77e708-d5b9-484b-a3d4-3eba03265b04" />
+   <img width="1145" height="855" alt="image" src="https://github.com/user-attachments/assets/ca7b3422-fb4f-4fc0-a7e6-315026149e2c" />
+   <img width="1568" height="1034" alt="image" src="https://github.com/user-attachments/assets/a72340f5-da47-4d43-8fbc-89bb8cf6493e" />
+
+
+   
+
+
+
+
+
+
+   
+
+   
+
+
+
+
+
+
 
